@@ -231,7 +231,7 @@ export default function OffersPage() {
                         description: "Please sign in to claim gift cards.",
                       });
                     }}
-                    className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
+                    className="w-full bg-[#C16B3E] text-white py-3.5 text-sm font-medium mt-3"
                   >
                     Claim gift cards »
                   </button>
@@ -267,7 +267,7 @@ export default function OffersPage() {
                         description: "Please sign in to unlock payment offers.",
                       });
                     }}
-                    className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
+                    className="w-full bg-[#C16B3E] text-white py-3.5 text-sm font-medium mt-3"
                   >
                     Unlock offers »
                   </button>
@@ -757,8 +757,8 @@ function PaymentOfferCard({ bank, offer, value, onReadMore }: {
 function BottomNav({ activeTab, onNavClick }: { activeTab: string; onNavClick?: (itemId: string) => void }) {
   const navItems = [
     { id: 'explore', label: 'Explore', icon: Search },
-    { id: 'offers', label: 'Offers', icon: Tag },
-    { id: 'bookings', label: 'Bookings', icon: Calendar },
+    { id: 'offers', label: 'Offers', icon: Tag, image: '/offer.png' },
+    { id: 'bookings', label: 'Bookings', icon: Calendar, image: '/booking.png' },
     { id: 'wishlist', label: 'Wishlist', icon: Heart },
     { id: 'profile', label: 'Sign in', icon: User },
   ];
@@ -777,7 +777,15 @@ function BottomNav({ activeTab, onNavClick }: { activeTab: string; onNavClick?: 
                 isActive ? 'text-[#874B2C]' : 'text-[#7D817D]'
               }`}
             >
-              <Icon className="w-5 h-5" />
+              {item.image ? (
+                <img 
+                  src={item.image} 
+                  alt={item.label} 
+                  className="w-5 h-5"
+                />
+              ) : (
+                <Icon className="w-5 h-5" />
+              )}
               <span className="text-xs font-light">{item.label}</span>
             </button>
           );
