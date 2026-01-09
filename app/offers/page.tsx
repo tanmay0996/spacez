@@ -365,36 +365,91 @@ function PaymentOfferCard({ bank, offer, value }: {
   offer: string;
   value: string;
 }) {
+  // Extract percentage from value (e.g., "UPTO 10% OFF" -> "10% OFF")
+  const displayValue = value.includes('%') ? value.split('%')[0] + '% OFF' : value;
+  const percentagePart = displayValue.split(' ')[0]; // "10%"
+  const offPart = displayValue.split(' ').slice(1).join(' '); // "OFF"
+
   return (
-    <div className="mb-4 h-[160px] flex rounded-lg overflow-hidden shadow-sm">
-      <div className="relative w-[68px] flex-shrink-0 bg-[#3168CF]">
-        <div className="absolute inset-0 flex items-center justify-center">
+    <div className="mb-4 h-[184px] flex gap-4 overflow-hidden shadow-sm">
+      <div 
+        className="relative flex-shrink-0 opacity-100" 
+        style={{ 
+          backgroundColor: '#3168CF',
+          width: '68px',
+          height: '184px',
+          paddingTop: '1px',
+          paddingRight: '1.67px',
+          paddingBottom: '1px',
+          paddingLeft: '1.67px'
+        }}
+      >
+        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingTop: '1px', paddingRight: '1.67px', paddingBottom: '1px', paddingLeft: '1.67px' }}>
           <span
-            className="font-serif text-white text-[24px] font-bold whitespace-nowrap leading-tight"
+            className="text-white font-bold whitespace-nowrap"
             style={{
               writingMode: 'vertical-rl',
               transform: 'rotate(180deg)',
-              letterSpacing: '-0.02em'
+              letterSpacing: '-0.02em',
+              fontSize: '28px',
+              lineHeight: '1.2'
             }}
           >
-            {value}
+            {percentagePart}
           </span>
+          {offPart && (
+            <span
+              className="text-white font-medium whitespace-nowrap mt-2"
+              style={{
+                writingMode: 'vertical-rl',
+                transform: 'rotate(180deg)',
+                letterSpacing: '-0.02em',
+                fontSize: '14px',
+                lineHeight: '1.2'
+              }}
+            >
+              {offPart}
+            </span>
+          )}
         </div>
-
-        <div className="absolute -right-3 top-1/2 -translate-y-1/2">
-          <div className="flex flex-col gap-2">
-            <div className="w-6 h-6 rounded-full bg-white" />
-            <div className="w-6 h-6 rounded-full bg-white" />
-          </div>
-        </div>
+        
+        {/* Perforated edge - repeating rectangular cutouts */}
+        <div 
+          className="absolute right-0 top-0 bottom-0"
+          style={{
+            width: '4px',
+            backgroundImage: `repeating-linear-gradient(
+              to bottom,
+              transparent 0px,
+              transparent 6px,
+              white 6px,
+              white 8px
+            )`,
+            backgroundSize: '4px 8px'
+          }}
+        />
       </div>
 
-      <div className="flex-1 bg-[#FDF9F7] p-5 relative flex flex-col justify-between">
+      <div className="flex-1 bg-white p-5 relative flex flex-col justify-between rounded-r-lg">
         <div className="flex items-start gap-3">
-          <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-[#E5E6E5]">
-            <div className="w-8 h-8 bg-[#3168CF] rounded flex items-center justify-center">
-              <span className="text-white font-bold text-xs">HD</span>
-            </div>
+          {/* HDFC Bank Logo - Blue square with red L-shapes */}
+          <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-[#E5E6E5] flex-shrink-0 relative">
+            <svg width="32" height="32" viewBox="0 0 32 32" className="absolute inset-0 m-auto">
+              {/* Central blue square */}
+              <rect x="12" y="12" width="8" height="8" fill="#0066B3" />
+              {/* Top-left red L */}
+              <rect x="0" y="0" width="12" height="4" fill="#E4002B" />
+              <rect x="0" y="0" width="4" height="12" fill="#E4002B" />
+              {/* Top-right red L */}
+              <rect x="20" y="0" width="12" height="4" fill="#E4002B" />
+              <rect x="28" y="0" width="4" height="12" fill="#E4002B" />
+              {/* Bottom-left red L */}
+              <rect x="0" y="28" width="12" height="4" fill="#E4002B" />
+              <rect x="0" y="20" width="4" height="12" fill="#E4002B" />
+              {/* Bottom-right red L */}
+              <rect x="20" y="28" width="12" height="4" fill="#E4002B" />
+              <rect x="28" y="20" width="4" height="12" fill="#E4002B" />
+            </svg>
           </div>
           <div className="flex-1">
             <h3 className="text-base font-semibold text-[#4B4E4B] mb-1">{bank}</h3>
@@ -403,9 +458,12 @@ function PaymentOfferCard({ bank, offer, value }: {
             </p>
           </div>
         </div>
-        <button className="text-[#3168CF] text-sm font-medium self-start">
-          Read more
-        </button>
+        <div className="mt-3">
+          <div className="h-px bg-[#E5E6E5] mb-3"></div>
+          <button className="text-[#7D817D] text-sm font-medium">
+            Read more
+          </button>
+        </div>
       </div>
     </div>
   );
