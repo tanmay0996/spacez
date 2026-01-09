@@ -222,9 +222,20 @@ function CouponCard({ code, title, description, value, color }: {
   const bgColor = color === 'orange' ? '#C16B3E' : '#3168CF';
 
   return (
-    <div className="mb-4 h-[184px] flex rounded-lg overflow-hidden shadow-sm">
-      <div className="relative w-[68px] flex-shrink-0" style={{ backgroundColor: bgColor }}>
-        <div className="absolute inset-0 flex items-center justify-center">
+    <div className="mb-4 h-[184px] flex gap-4 overflow-hidden shadow-sm">
+      <div 
+        className="relative flex-shrink-0 opacity-100" 
+        style={{ 
+          backgroundColor: bgColor,
+          width: '68px',
+          height: '184px',
+          paddingTop: '1px',
+          paddingRight: '1.67px',
+          paddingBottom: '1px',
+          paddingLeft: '1.67px'
+        }}
+      >
+        <div className="absolute inset-0 flex items-center justify-center" style={{ paddingTop: '1px', paddingRight: '1.67px', paddingBottom: '1px', paddingLeft: '1.67px' }}>
           <span
             className="font-serif text-white text-[32px] font-bold whitespace-nowrap"
             style={{
@@ -236,13 +247,22 @@ function CouponCard({ code, title, description, value, color }: {
             {value}
           </span>
         </div>
-
-        <div className="absolute -right-3 top-1/2 -translate-y-1/2">
-          <div className="flex flex-col gap-2">
-            <div className="w-6 h-6 rounded-full bg-white" />
-            <div className="w-6 h-6 rounded-full bg-white" />
-          </div>
-        </div>
+        
+        {/* Perforated edge - repeating rectangular cutouts */}
+        <div 
+          className="absolute right-0 top-0 bottom-0"
+          style={{
+            width: '4px',
+            backgroundImage: `repeating-linear-gradient(
+              to bottom,
+              transparent 0px,
+              transparent 6px,
+              white 6px,
+              white 8px
+            )`,
+            backgroundSize: '4px 8px'
+          }}
+        />
       </div>
 
       <div className="flex-1 bg-[#FDF9F7] p-5 relative">
