@@ -355,7 +355,7 @@ function TabBar({ activeTab, onTabChange, isSticky }: {
   isSticky: boolean;
 }) {
   return (
-    <div className="bg-white shadow-lg">
+    <div className={`bg-white ${isSticky ? 'shadow-lg' : ''}`}>
       <div className="flex">
         <button
           onClick={() => onTabChange('coupons')}
