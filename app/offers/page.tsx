@@ -83,18 +83,18 @@ export default function OffersPage() {
         <div className="pt-14 pb-20">
           {/* Sticky header section */}
           <div className="sticky top-14 z-40 bg-white">
-            <div className="px-4 pt-4">
-              <h1 className="text-2xl font-semibold text-[#4B4E4B] mb-1">Offers</h1>
+            <div className="px-4 pt-4 pb-3">
+              <h1 className="text-2xl font-semibold text-[#4B4E4B] mb-2">Offers</h1>
               {!isSignedIn ? (
-                <p className="text-sm font-light text-[#7D817D]">Sign in to unlock exclusive additional rewards</p>
+                <p className="text-sm font-light text-[#7D817D] mb-4">Sign in to unlock exclusive additional rewards</p>
               ) : (
-                <p className="text-sm font-light text-[#7D817D]">Book directly with us to get exclusive benefits</p>
+                <p className="text-sm font-light text-[#7D817D] mb-4">Book directly with us to get exclusive benefits</p>
               )}
             </div>
 
             {/* Sign in button - only show when not signed in, inside sticky section */}
             {!isSignedIn && (
-              <div className="px-4 mt-4">
+              <div className="px-4 mb-4">
                 <SignInBanner onSignIn={() => setIsSignedIn(true)} />
               </div>
             )}
@@ -334,21 +334,18 @@ function SignInBanner({ onSignIn }: { onSignIn: () => void }) {
   const { toast } = useToast();
   
   return (
-    <div className="bg-[#C16B3E] text-white rounded-lg p-4 text-center">
-      <p className="text-sm font-light mb-2">Sign in for 10% back on SPACEZ...</p>
-      <button
-        onClick={() => {
-          onSignIn();
-          toast({
-            title: "Success!",
-            description: "You have successfully signed in.",
-          });
-        }}
-        className="bg-white text-[#C16B3E] px-6 py-2 rounded-md text-sm font-semibold"
-      >
-        Sign in
-      </button>
-    </div>
+    <button
+      onClick={() => {
+        onSignIn();
+        toast({
+          title: "Success!",
+          description: "You have successfully signed in.",
+        });
+      }}
+      className="w-full bg-[#C16B3E] text-white py-3.5 text-sm font-medium"
+    >
+      Sign in
+    </button>
   );
 }
 
