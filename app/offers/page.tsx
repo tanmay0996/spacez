@@ -8,6 +8,8 @@ export default function OffersPage() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [activeTab, setActiveTab] = useState<'coupons' | 'giftcards' | 'payment'>('coupons');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [giftCardsExpanded, setGiftCardsExpanded] = useState(false);
+  const [paymentOffersExpanded, setPaymentOffersExpanded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,10 +95,34 @@ export default function OffersPage() {
             {!isSignedIn && (
               <>
                 <SectionHeader title="Bonus gift cards:" />
-                <BonusGiftCardsPreview />
-                <button className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3">
-                  Claim gift cards →
-                </button>
+                <div className="overflow-hidden transition-all duration-500 ease-in-out">
+                  {!giftCardsExpanded ? (
+                    <>
+                      <BonusGiftCardsPreview />
+                      <button 
+                        onClick={() => setGiftCardsExpanded(true)}
+                        className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
+                      >
+                        Claim gift cards →
+                      </button>
+                    </>
+                  ) : (
+                    <div className="space-y-4 mt-3">
+                      <GiftCardRow
+                        brand="MYNTRA"
+                        value="₹1500"
+                        description="Get this gift voucher on booking worth ₹1500"
+                        color="pink"
+                      />
+                      <GiftCardRow
+                        brand="HARNNER"
+                        value="₹1000"
+                        description="Get this gift voucher on booking worth ₹1500"
+                        color="black"
+                      />
+                    </div>
+                  )}
+                </div>
               </>
             )}
 
@@ -115,10 +141,27 @@ export default function OffersPage() {
             {!isSignedIn && (
               <>
                 <SectionHeader title="Payment offers:" />
-                <PaymentOffersPreview />
-                <button className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3">
-                  Unlock offers →
-                </button>
+                <div className="overflow-hidden transition-all duration-500 ease-in-out">
+                  {!paymentOffersExpanded ? (
+                    <>
+                      <PaymentOffersPreview />
+                      <button 
+                        onClick={() => setPaymentOffersExpanded(true)}
+                        className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
+                      >
+                        Unlock offers →
+                      </button>
+                    </>
+                  ) : (
+                    <div className="mt-3">
+                      <PaymentOfferCard
+                        bank="HDFC BANK"
+                        offer="Get 10% off on booking above ₹1500"
+                        value="UPTO 10% OFF"
+                      />
+                    </div>
+                  )}
+                </div>
               </>
             )}
           </div>
