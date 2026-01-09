@@ -143,7 +143,6 @@ export default function OffersPage() {
                 <>
                   <BonusGiftCardsPreview />
                   <button 
-                    onClick={() => setIsSignedIn(true)}
                     className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
                   >
                     Claim gift cards »
@@ -168,7 +167,6 @@ export default function OffersPage() {
                 <>
                   <PaymentOffersPreview />
                   <button 
-                    onClick={() => setIsSignedIn(true)}
                     className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
                   >
                     Unlock offers »
