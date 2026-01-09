@@ -84,4 +84,21 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Global button click animations for ALL buttons */
+  button {
+    @apply transition-all duration-150 ease-out;
+    @apply active:scale-[0.97] active:shadow-inner;
+    @apply select-none;
+  }
+  
+  /* Enhanced animation for buttons with no existing transition */
+  button:not([class*="transition"]) {
+    @apply transition-transform duration-150 ease-out;
+  }
+  
+  /* Prevent animation on disabled buttons */
+  button:disabled {
+    @apply active:scale-100 active:shadow-none;
+  }
 }
