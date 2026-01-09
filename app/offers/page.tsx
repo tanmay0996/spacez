@@ -92,6 +92,13 @@ export default function OffersPage() {
               )}
             </div>
 
+            {/* Sign in button - only show when not signed in, inside sticky section */}
+            {!isSignedIn && (
+              <div className="px-4 mt-4">
+                <SignInBanner onSignIn={() => setIsSignedIn(true)} />
+              </div>
+            )}
+
             {/* Tabs - scroll to sections for both signed in and signed out */}
             <TabBar 
               activeTab={isSignedIn ? activeTab : selectedSection} 
@@ -99,10 +106,6 @@ export default function OffersPage() {
               isSticky={isScrolled} 
             />
           </div>
-
-          {!isSignedIn && (
-            <SignInBanner onSignIn={() => setIsSignedIn(true)} />
-          )}
 
           <div className="px-4 mt-6">
             {/* Coupons Section - Always visible */}
@@ -331,22 +334,20 @@ function SignInBanner({ onSignIn }: { onSignIn: () => void }) {
   const { toast } = useToast();
   
   return (
-    <div className="px-4 mt-4">
-      <div className="bg-[#C16B3E] text-white rounded-lg p-4 text-center">
-        <p className="text-sm font-light mb-2">Sign in for 10% back on SPACEZ...</p>
-        <button
-          onClick={() => {
-            onSignIn();
-            toast({
-              title: "Success!",
-              description: "You have successfully signed in.",
-            });
-          }}
-          className="bg-white text-[#C16B3E] px-6 py-2 rounded-md text-sm font-semibold"
-        >
-          Sign in
-        </button>
-      </div>
+    <div className="bg-[#C16B3E] text-white rounded-lg p-4 text-center">
+      <p className="text-sm font-light mb-2">Sign in for 10% back on SPACEZ...</p>
+      <button
+        onClick={() => {
+          onSignIn();
+          toast({
+            title: "Success!",
+            description: "You have successfully signed in.",
+          });
+        }}
+        className="bg-white text-[#C16B3E] px-6 py-2 rounded-md text-sm font-semibold"
+      >
+        Sign in
+      </button>
     </div>
   );
 }
