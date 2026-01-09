@@ -21,8 +21,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'SPAGEZ - Offers',
-  description: 'Exclusive offers and deals on SPAGEZ',
+  title: 'SPACEZ - Offers',
+  description: 'Exclusive offers and deals on SPACEZ',
   openGraph: {
     images: [
       {

@@ -20,8 +20,6 @@ export default function OffersPage() {
   return (
     <div className="min-h-screen bg-white flex justify-center">
       <div className="w-full max-w-[393px] relative">
-        <DevToggle isSignedIn={isSignedIn} onToggle={() => setIsSignedIn(!isSignedIn)} />
-
         <Header isScrolled={isScrolled} />
 
         <div className="pt-14 pb-20">
@@ -35,7 +33,7 @@ export default function OffersPage() {
           </div>
 
           {!isSignedIn && (
-            <SignInBanner isScrolled={isScrolled} />
+            <SignInBanner onSignIn={() => setIsSignedIn(true)} />
           )}
 
           {isSignedIn && (
@@ -131,23 +129,12 @@ export default function OffersPage() {
   );
 }
 
-function DevToggle({ isSignedIn, onToggle }: { isSignedIn: boolean; onToggle: () => void }) {
-  return (
-    <button
-      onClick={onToggle}
-      className="fixed top-2 left-1/2 -translate-x-1/2 z-[100] bg-gray-800 text-white px-4 py-2 rounded-full text-xs font-medium shadow-lg"
-    >
-      {isSignedIn ? 'Signed In' : 'Signed Out'} (Click to Toggle)
-    </button>
-  );
-}
-
 function Header({ isScrolled }: { isScrolled: boolean }) {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow ${isScrolled ? 'shadow-sm' : ''}`}>
       <div className="max-w-[393px] mx-auto flex items-center justify-between h-14 px-4">
         <div className="flex items-center">
-          <span className="font-display text-lg text-[#4B4E4B] font-medium">SPAGEZ</span>
+          <span className="font-display text-lg text-[#4B4E4B] font-medium">SPACEZ</span>
         </div>
         <button className="p-2">
           <Menu className="w-5 h-5 text-[#4B4E4B]" />
@@ -157,12 +144,15 @@ function Header({ isScrolled }: { isScrolled: boolean }) {
   );
 }
 
-function SignInBanner({ isScrolled }: { isScrolled: boolean }) {
+function SignInBanner({ onSignIn }: { onSignIn: () => void }) {
   return (
     <div className="px-4 mt-4">
       <div className="bg-[#C16B3E] text-white rounded-lg p-4 text-center">
-        <p className="text-sm font-light mb-2">Sign in for 10% back on SPAGEZ...</p>
-        <button className="bg-white text-[#C16B3E] px-6 py-2 rounded-md text-sm font-semibold">
+        <p className="text-sm font-light mb-2">Sign in for 10% back on SPACEZ...</p>
+        <button
+          onClick={onSignIn}
+          className="bg-white text-[#C16B3E] px-6 py-2 rounded-md text-sm font-semibold"
+        >
           Sign in
         </button>
       </div>
