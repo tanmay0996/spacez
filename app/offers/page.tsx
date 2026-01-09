@@ -87,7 +87,7 @@ export default function OffersPage() {
           {/* Sticky header section */}
           <div className="sticky top-14 z-40 bg-white">
             <div className="px-4 pt-4 pb-3">
-              <h1 className="text-2xl font-semibold text-[#4B4E4B] mb-2">Offers</h1>
+              <h1 className="text-xl font-semibold text-[#4B4E4B] mb-2">Offers</h1>
               {!isSignedIn ? (
                 <p className="text-sm font-light text-[#7D817D] mb-4">Sign in to unlock exclusive additional rewards</p>
               ) : (
@@ -320,7 +320,7 @@ function Header({ isScrolled, onMenuClick }: { isScrolled: boolean; onMenuClick?
             <rect x="3.5" y="16" width="15" height="1.5" fill="#874B2C" />
             <rect x="3.5" y="18" width="15" height="1.5" fill="#874B2C" />
           </svg>
-          <span className="font-display text-lg text-[#874B2C] font-medium">SPACEZ</span>
+          <span className="font-display text-2xl text-[#874B2C] font-medium">SPACEZ</span>
         </div>
         <button 
           onClick={onMenuClick}
