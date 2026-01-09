@@ -419,7 +419,7 @@ function GiftCardRow({ brand, value, description, color }: {
                 <img 
                   src="/0eca9644dbe42378546cdfb94c27980c9b80724a%20(1).png" 
                   alt="Myntra Logo" 
-                  className="h-5 w-auto flex-shrink-0"
+                  className="h-8 w-auto flex-shrink-0"
                   style={{ objectFit: 'contain' }}
                 />
                 <span className="text-base font-bold text-[#4B4E4B] uppercase tracking-tight" style={{ fontFamily: 'sans-serif' }}>MYNTRA</span>
