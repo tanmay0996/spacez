@@ -81,25 +81,28 @@ export default function OffersPage() {
         />
 
         <div className="pt-14 pb-20">
-          <div className="px-4 pt-4">
-            <h1 className="text-2xl font-semibold text-[#4B4E4B] mb-1">Offers</h1>
-            {!isSignedIn ? (
-              <p className="text-sm font-light text-[#7D817D]">Sign in to unlock exclusive additional rewards</p>
-            ) : (
-              <p className="text-sm font-light text-[#7D817D]">Book directly with us to get exclusive benefits</p>
-            )}
+          {/* Sticky header section */}
+          <div className="sticky top-14 z-40 bg-white">
+            <div className="px-4 pt-4">
+              <h1 className="text-2xl font-semibold text-[#4B4E4B] mb-1">Offers</h1>
+              {!isSignedIn ? (
+                <p className="text-sm font-light text-[#7D817D]">Sign in to unlock exclusive additional rewards</p>
+              ) : (
+                <p className="text-sm font-light text-[#7D817D]">Book directly with us to get exclusive benefits</p>
+              )}
+            </div>
+
+            {/* Tabs - scroll to sections for both signed in and signed out */}
+            <TabBar 
+              activeTab={isSignedIn ? activeTab : selectedSection} 
+              onTabChange={scrollToSection} 
+              isSticky={isScrolled} 
+            />
           </div>
 
           {!isSignedIn && (
             <SignInBanner onSignIn={() => setIsSignedIn(true)} />
           )}
-
-          {/* Tabs - scroll to sections for both signed in and signed out */}
-          <TabBar 
-            activeTab={isSignedIn ? activeTab : selectedSection} 
-            onTabChange={scrollToSection} 
-            isSticky={isScrolled} 
-          />
 
           <div className="px-4 mt-6">
             {/* Coupons Section - Always visible */}
@@ -354,11 +357,11 @@ function TabBar({ activeTab, onTabChange, isSticky }: {
   isSticky: boolean;
 }) {
   return (
-    <div className={`${isSticky ? 'sticky top-14 z-40' : ''} bg-white border-b border-[#E5E6E5]`}>
-      <div className="px-4 flex gap-6">
+    <div className="bg-white shadow-lg">
+      <div className="flex">
         <button
           onClick={() => onTabChange('coupons')}
-          className={`py-3 text-sm font-medium relative ${
+          className={`flex-1 py-3 text-sm font-medium relative ${
             activeTab === 'coupons' ? 'text-[#4B4E4B]' : 'text-[#7D817D]'
           }`}
         >
@@ -369,7 +372,7 @@ function TabBar({ activeTab, onTabChange, isSticky }: {
         </button>
         <button
           onClick={() => onTabChange('giftcards')}
-          className={`py-3 text-sm font-medium relative ${
+          className={`flex-1 py-3 text-sm font-medium relative ${
             activeTab === 'giftcards' ? 'text-[#4B4E4B]' : 'text-[#7D817D]'
           }`}
         >
@@ -380,7 +383,7 @@ function TabBar({ activeTab, onTabChange, isSticky }: {
         </button>
         <button
           onClick={() => onTabChange('payment')}
-          className={`py-3 text-sm font-medium relative ${
+          className={`flex-1 py-3 text-sm font-medium relative ${
             activeTab === 'payment' ? 'text-[#4B4E4B]' : 'text-[#7D817D]'
           }`}
         >
