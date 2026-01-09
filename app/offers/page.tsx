@@ -133,11 +133,27 @@ function Header({ isScrolled }: { isScrolled: boolean }) {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow ${isScrolled ? 'shadow-sm' : ''}`}>
       <div className="max-w-[393px] mx-auto flex items-center justify-between h-14 px-4">
-        <div className="flex items-center">
-          <span className="font-display text-lg text-[#4B4E4B] font-medium">SPACEZ</span>
+        <div className="flex items-center gap-2.5">
+          {/* House Logo with double-line effect */}
+          <svg width="26" height="20" viewBox="0 0 26 20" className="flex-shrink-0">
+            {/* Left vertical segment - single solid line */}
+            <rect x="1" y="8" width="2.5" height="10" fill="#874B2C" />
+            {/* Top-left diagonal (roof left) - single solid line */}
+            <path d="M 3.5 8 L 11 2" stroke="#874B2C" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            {/* Top-right diagonal (roof right) - double-line effect */}
+            <path d="M 11 2 L 18.5 8" stroke="#874B2C" strokeWidth="2" strokeLinecap="round" fill="none" />
+            <path d="M 11.5 2.5 L 19 8.5" stroke="#874B2C" strokeWidth="2" strokeLinecap="round" fill="none" />
+            {/* Right vertical segment - double-line effect */}
+            <rect x="18.5" y="8" width="1.5" height="10" fill="#874B2C" />
+            <rect x="20.5" y="8" width="1.5" height="10" fill="#874B2C" />
+            {/* Bottom horizontal segment - double-line effect */}
+            <rect x="3.5" y="16" width="15" height="1.5" fill="#874B2C" />
+            <rect x="3.5" y="18" width="15" height="1.5" fill="#874B2C" />
+          </svg>
+          <span className="font-display text-lg text-[#874B2C] font-medium">SPACEZ</span>
         </div>
         <button className="p-2">
-          <Menu className="w-5 h-5 text-[#4B4E4B]" />
+          <Menu className="w-5 h-5 text-[#874B2C]" />
         </button>
       </div>
     </header>
