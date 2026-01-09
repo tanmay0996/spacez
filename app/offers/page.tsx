@@ -602,39 +602,18 @@ function BonusGiftCardsPreview() {
           <p className="text-xs text-[#874B2C] mb-2 font-semibold">Assured vouchers up to</p>
           <div className="flex items-center gap-1 mb-2">
             <span className="text-3xl font-bold text-[#874B2C]">₹1000</span>
-            {/* Sparkle icons */}
-            <svg width="16" height="16" viewBox="0 0 16 16" className="text-yellow-400">
-              <path d="M8 0 L9.5 6 L16 7.5 L9.5 9 L8 16 L6.5 9 L0 7.5 L6.5 6 Z" fill="currentColor" />
-            </svg>
-            <svg width="16" height="16" viewBox="0 0 16 16" className="text-yellow-400">
-              <path d="M8 0 L9.5 6 L16 7.5 L9.5 9 L8 16 L6.5 9 L0 7.5 L6.5 6 Z" fill="currentColor" />
-            </svg>
+            <span className="text-xl">✨</span>
           </div>
           <p className="text-xs text-[#2f2a28] font-light">of trending brands</p>
         </div>
         
-        {/* Overlapping gift cards on the right */}
-        <div className="relative flex-shrink-0" style={{ width: '120px', height: '100px' }}>
-          {/* Top orange card */}
-          <div className="absolute top-0 right-0 bg-[#C16B3E] text-white rounded-lg p-3 text-center shadow-md" style={{ width: '90px', height: '70px', zIndex: 2 }}>
-            <div className="text-xl font-bold mb-0.5">₹400</div>
-            <div className="text-[10px] opacity-90">Gift card</div>
-          </div>
-          {/* Bottom blue card with sparkles */}
-          <div className="absolute bottom-0 right-4 bg-[#3168CF] text-white rounded-lg p-3 text-center shadow-md overflow-hidden" style={{ width: '90px', height: '70px', zIndex: 1 }}>
-            <div className="text-xl font-bold mb-0.5">₹500</div>
-            <div className="text-[10px] opacity-90">Gift card</div>
-            {/* Sparkle icons scattered */}
-            <svg width="8" height="8" viewBox="0 0 8 8" className="absolute top-2 right-3 text-white opacity-60">
-              <path d="M4 0 L4.5 3 L8 3.5 L4.5 4 L4 8 L3.5 4 L0 3.5 L3.5 3 Z" fill="currentColor" />
-            </svg>
-            <svg width="6" height="6" viewBox="0 0 6 6" className="absolute bottom-3 left-2 text-white opacity-60">
-              <path d="M3 0 L3.3 2.2 L6 2.5 L3.3 2.8 L3 6 L2.7 2.8 L0 2.5 L2.7 2.2 Z" fill="currentColor" />
-            </svg>
-            <svg width="7" height="7" viewBox="0 0 7 7" className="absolute top-4 left-4 text-white opacity-60">
-              <path d="M3.5 0 L3.8 2.5 L7 3 L3.8 3.5 L3.5 7 L3.2 3.5 L0 3 L3.2 2.5 Z" fill="currentColor" />
-            </svg>
-          </div>
+        {/* Gift cards image on the right */}
+        <div className="flex-shrink-0">
+          <img 
+            src="/Group 1597884795.png" 
+            alt="Gift Cards Preview" 
+            className="w-[120px] h-auto"
+          />
         </div>
       </div>
     </div>
