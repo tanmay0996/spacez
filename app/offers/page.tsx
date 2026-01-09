@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Copy, Menu, Search, Tag, Calendar, Heart, User } from 'lucide-react';
 
 export default function OffersPage() {
@@ -309,33 +310,115 @@ function GiftCardRow({ brand, value, description, color }: {
   const bgColor = color === 'pink' ? '#D41C9B' : '#000000';
 
   return (
-    <div className="flex gap-4 bg-[#FDF9F7] rounded-lg p-4">
-      <div
-        className="w-[81px] h-[74px] rounded-[14px] flex-shrink-0 flex items-center justify-center relative overflow-hidden"
-        style={{ backgroundColor: bgColor }}
+    <div className="mb-4 h-[184px] flex gap-4 overflow-hidden shadow-sm">
+      <div 
+        className="relative flex-shrink-0 opacity-100" 
+        style={{ 
+          backgroundColor: bgColor,
+          width: '68px',
+          height: '184px',
+          paddingTop: '1px',
+          paddingRight: '1.67px',
+          paddingBottom: '1px',
+          paddingLeft: '1.67px'
+        }}
       >
-        <span className="text-white font-bold text-xl">{brand.charAt(0)}</span>
-        <div
-          className="absolute top-2 right-2 bg-[#11B263] text-white text-[10px] font-semibold px-2 py-0.5 rounded"
-          style={{ transform: 'rotate(26deg)' }}
-        >
-          {value}
+        <div className="absolute inset-0 flex items-center justify-center" style={{ paddingTop: '1px', paddingRight: '1.67px', paddingBottom: '1px', paddingLeft: '1.67px' }}>
+          <span
+            className="text-white font-bold whitespace-nowrap"
+            style={{
+              writingMode: 'vertical-rl',
+              transform: 'rotate(180deg)',
+              letterSpacing: '-0.02em',
+              fontSize: '28px',
+              lineHeight: '1.2'
+            }}
+          >
+            {value}
+          </span>
         </div>
+        
+        {/* Perforated edge - repeating rectangular cutouts */}
+        <div 
+          className="absolute right-0 top-0 bottom-0"
+          style={{
+            width: '4px',
+            backgroundImage: `repeating-linear-gradient(
+              to bottom,
+              transparent 0px,
+              transparent 6px,
+              white 6px,
+              white 8px
+            )`,
+            backgroundSize: '4px 8px'
+          }}
+        />
       </div>
 
-      <div className="flex-1 flex flex-col justify-between">
-        <div>
-          <h3 className="text-base font-semibold text-[#4B4E4B] mb-1">{brand}</h3>
-          <p className="text-xs font-light text-[#7D817D] leading-relaxed">
+      <div className="flex-1 bg-[#FDF9F7] p-5 relative flex flex-col justify-between rounded-r-lg">
+        <div className="flex items-start justify-between">
+          <div className="flex items-start gap-3 flex-1">
+            {/* Myntra Logo - Using image */}
+            {brand === 'MYNTRA' && (
+              <div className="flex items-center gap-2.5 flex-shrink-0">
+                <Image 
+                  src="/myntra-logo.png" 
+                  alt="Myntra Logo" 
+                  width={28}
+                  height={20}
+                  className="flex-shrink-0"
+                  style={{ objectFit: 'contain' }}
+                />
+                <span className="text-base font-bold text-[#4B4E4B] uppercase tracking-tight" style={{ fontFamily: 'sans-serif' }}>MYNTRA</span>
+              </div>
+            )}
+            
+            {/* Hammer Logo - Stylized HAMMER text */}
+            {brand === 'HARNNER' && (
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="w-auto h-9 bg-black rounded flex items-center justify-center px-3">
+                  <svg width="52" height="14" viewBox="0 0 52 14" className="flex-shrink-0">
+                    {/* H */}
+                    <rect x="0" y="0" width="1.5" height="14" fill="white" />
+                    <rect x="0" y="6" width="6" height="1.5" fill="white" />
+                    <rect x="4.5" y="0" width="1.5" height="14" fill="white" />
+                    {/* A - inverted V shape (no crossbar) */}
+                    <path d="M 7 14 L 9.5 0 L 12 14" stroke="white" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+                    {/* M */}
+                    <rect x="14" y="0" width="1.5" height="14" fill="white" />
+                    <path d="M 15.5 0 L 17.5 7 L 19.5 0" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                    <rect x="21" y="0" width="1.5" height="14" fill="white" />
+                    {/* M */}
+                    <rect x="24" y="0" width="1.5" height="14" fill="white" />
+                    <path d="M 25.5 0 L 27.5 7 L 29.5 0" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                    <rect x="31" y="0" width="1.5" height="14" fill="white" />
+                    {/* E - three horizontal lines (no vertical bar) */}
+                    <rect x="34" y="0" width="4" height="1.5" fill="white" />
+                    <rect x="34" y="6" width="4" height="1.5" fill="white" />
+                    <rect x="34" y="12.5" width="4" height="1.5" fill="white" />
+                    {/* R */}
+                    <rect x="40" y="0" width="1.5" height="14" fill="white" />
+                    <rect x="40" y="0" width="5" height="1.5" fill="white" />
+                    <rect x="40" y="6" width="5" height="1.5" fill="white" />
+                    <path d="M 45 0 L 46.5 7 L 45 14" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <span className="text-base font-semibold text-[#4B4E4B]">{brand}</span>
+              </div>
+            )}
+          </div>
+          <button className="text-[#C16B3E] text-sm font-medium flex-shrink-0">
+            Collect
+          </button>
+        </div>
+        
+        <div className="mt-3">
+          <p className="text-sm font-light text-[#7D817D] leading-relaxed mb-3">
             {description}
           </p>
-        </div>
-        <div className="flex justify-between items-center mt-2">
-          <button className="text-[#C16B3E] text-sm font-medium">
+          <div className="h-px bg-[#E5E6E5] mb-3"></div>
+          <button className="text-[#7D817D] text-sm font-medium underline">
             Read more
-          </button>
-          <button className="bg-white border border-[#C16B3E] text-[#C16B3E] px-4 py-1.5 rounded-md text-sm font-medium">
-            Collect
           </button>
         </div>
       </div>
