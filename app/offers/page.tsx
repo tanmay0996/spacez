@@ -81,6 +81,9 @@ export default function OffersPage() {
         />
 
         <div className="pt-14 pb-20">
+          {/* Separator line between header and offers */}
+          <div className="h-px bg-gray-500"></div>
+          
           {/* Sticky header section */}
           <div className="sticky top-14 z-40 bg-white">
             <div className="px-4 pt-4 pb-3">
