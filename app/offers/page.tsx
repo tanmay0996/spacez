@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Copy, Menu, Search, Tag, Calendar, Heart, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -11,16 +11,24 @@ export default function OffersPage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedSection, setSelectedSection] = useState<'coupons' | 'giftcards' | 'payment'>('coupons');
   const { toast } = useToast();
+  const isScrollingRef = useRef(false);
 
   const scrollToSection = (section: 'coupons' | 'giftcards' | 'payment') => {
+    // Immediately set the active tab when clicked
     if (isSignedIn) {
       setActiveTab(section);
     } else {
       setSelectedSection(section);
     }
+    
+    // Prevent scroll handler from overriding during smooth scroll
+    isScrollingRef.current = true;
     const element = document.getElementById(section);
     if (element) {
-      const headerOffset = 56; // Height of header
+      // Calculate total offset: header (56px) + sticky section height
+      // Sticky section includes: title + subtitle + sign-in button (if not signed in) + tabs
+      const stickySectionHeight = isSignedIn ? 140 : 220; // Approximate heights
+      const headerOffset = 56 + stickySectionHeight;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -28,6 +36,11 @@ export default function OffersPage() {
         top: offsetPosition,
         behavior: 'smooth'
       });
+      
+      // Re-enable scroll detection after smooth scroll completes (typically 500ms)
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 600);
     }
   };
 
@@ -35,31 +48,46 @@ export default function OffersPage() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
+      // Don't update active tab during programmatic scrolling (when user clicks a tab)
+      if (isScrollingRef.current) {
+        return;
+      }
+      
       // Update active section/tab based on scroll position
       const coupons = document.getElementById('coupons');
       const giftcards = document.getElementById('giftcards');
       const payment = document.getElementById('payment');
       
-      const scrollPosition = window.scrollY + 150; // Offset for header and tabs
+      // Use the same offset calculation as scrollToSection
+      const stickySectionHeight = isSignedIn ? 140 : 220;
+      const headerOffset = 56 + stickySectionHeight;
       
-      if (payment && scrollPosition >= payment.offsetTop) {
-        if (isSignedIn) {
-          setActiveTab('payment');
-        } else {
-          setSelectedSection('payment');
-        }
-      } else if (giftcards && scrollPosition >= giftcards.offsetTop) {
-        if (isSignedIn) {
-          setActiveTab('giftcards');
-        } else {
-          setSelectedSection('giftcards');
-        }
-      } else if (coupons && scrollPosition >= coupons.offsetTop) {
-        if (isSignedIn) {
-          setActiveTab('coupons');
-        } else {
-          setSelectedSection('coupons');
-        }
+      // Check sections using offsetTop for more reliable detection
+      const scrollY = window.scrollY;
+      
+      // Get section positions relative to document
+      const couponsTop = coupons?.offsetTop || 0;
+      const giftcardsTop = giftcards?.offsetTop || 0;
+      const paymentTop = payment?.offsetTop || 0;
+      
+      // Calculate which section is currently at the sticky header position
+      // Check from bottom to top (most specific first)
+      let activeSection: 'coupons' | 'giftcards' | 'payment' = 'coupons';
+      
+      // A section is active if we've scrolled past its start position (accounting for sticky header)
+      if (scrollY + headerOffset >= paymentTop) {
+        activeSection = 'payment';
+      } else if (scrollY + headerOffset >= giftcardsTop) {
+        activeSection = 'giftcards';
+      } else if (scrollY + headerOffset >= couponsTop) {
+        activeSection = 'coupons';
+      }
+      
+      // Update the active tab/section
+      if (isSignedIn) {
+        setActiveTab(activeSection);
+      } else {
+        setSelectedSection(activeSection);
       }
     };
 
