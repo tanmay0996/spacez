@@ -484,9 +484,9 @@ function BonusGiftCardsPreview() {
     <div className="bg-[#FDF9F7] rounded-lg p-4 mb-3">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
-          <p className="text-xs text-[#7D817D] mb-2 font-light">Assured vouchers up to</p>
+          <p className="text-xs text-[#874B2C] mb-2 font-semibold">Assured vouchers up to</p>
           <div className="flex items-center gap-1 mb-2">
-            <span className="text-3xl font-bold text-[#C16B3E]">₹1000</span>
+            <span className="text-3xl font-bold text-[#874B2C]">₹1000</span>
             {/* Sparkle icons */}
             <svg width="16" height="16" viewBox="0 0 16 16" className="text-yellow-400">
               <path d="M8 0 L9.5 6 L16 7.5 L9.5 9 L8 16 L6.5 9 L0 7.5 L6.5 6 Z" fill="currentColor" />
@@ -495,7 +495,7 @@ function BonusGiftCardsPreview() {
               <path d="M8 0 L9.5 6 L16 7.5 L9.5 9 L8 16 L6.5 9 L0 7.5 L6.5 6 Z" fill="currentColor" />
             </svg>
           </div>
-          <p className="text-xs text-[#7D817D] font-light">of trending brands</p>
+          <p className="text-xs text-[#2f2a28] font-light">of trending brands</p>
         </div>
         
         {/* Overlapping gift cards on the right */}
@@ -532,8 +532,8 @@ function PaymentOffersPreview() {
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1">
           <p className="text-xs text-[#7D817D] mb-1 font-light">Save more on your bookings</p>
-          <p className="text-2xl font-bold text-[#C16B3E] mb-1">upto 15% Off</p>
-          <p className="text-xs text-[#C16B3E] font-light">on select payment methods</p>
+          <p className="text-2xl font-bold text-[#874B2C] mb-1">upto 15% Off</p>
+          <p className="text-xs text-[#874B2C] font-semibold">on select payment methods</p>
         </div>
         <div className="flex-shrink-0">
           <img 
