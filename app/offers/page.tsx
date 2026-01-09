@@ -8,12 +8,14 @@ export default function OffersPage() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [activeTab, setActiveTab] = useState<'coupons' | 'giftcards' | 'payment'>('coupons');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [giftCardsExpanded, setGiftCardsExpanded] = useState(false);
-  const [paymentOffersExpanded, setPaymentOffersExpanded] = useState(false);
   const [selectedSection, setSelectedSection] = useState<'coupons' | 'giftcards' | 'payment'>('coupons');
 
   const scrollToSection = (section: 'coupons' | 'giftcards' | 'payment') => {
-    setSelectedSection(section);
+    if (isSignedIn) {
+      setActiveTab(section);
+    } else {
+      setSelectedSection(section);
+    }
     const element = document.getElementById(section);
     if (element) {
       const headerOffset = 56; // Height of header
@@ -31,19 +33,29 @@ export default function OffersPage() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
-      // Update active section based on scroll position (for non-signed-in users)
-      if (!isSignedIn) {
-        const coupons = document.getElementById('coupons');
-        const giftcards = document.getElementById('giftcards');
-        const payment = document.getElementById('payment');
-        
-        const scrollPosition = window.scrollY + 100; // Offset for header
-        
-        if (payment && scrollPosition >= payment.offsetTop) {
+      // Update active section/tab based on scroll position
+      const coupons = document.getElementById('coupons');
+      const giftcards = document.getElementById('giftcards');
+      const payment = document.getElementById('payment');
+      
+      const scrollPosition = window.scrollY + 150; // Offset for header and tabs
+      
+      if (payment && scrollPosition >= payment.offsetTop) {
+        if (isSignedIn) {
+          setActiveTab('payment');
+        } else {
           setSelectedSection('payment');
-        } else if (giftcards && scrollPosition >= giftcards.offsetTop) {
+        }
+      } else if (giftcards && scrollPosition >= giftcards.offsetTop) {
+        if (isSignedIn) {
+          setActiveTab('giftcards');
+        } else {
           setSelectedSection('giftcards');
-        } else if (coupons && scrollPosition >= coupons.offsetTop) {
+        }
+      } else if (coupons && scrollPosition >= coupons.offsetTop) {
+        if (isSignedIn) {
+          setActiveTab('coupons');
+        } else {
           setSelectedSection('coupons');
         }
       }
@@ -72,140 +84,98 @@ export default function OffersPage() {
             <SignInBanner onSignIn={() => setIsSignedIn(true)} />
           )}
 
-          {/* Tabs for non-signed-in users */}
-          {!isSignedIn && (
-            <TabBar 
-              activeTab={selectedSection} 
-              onTabChange={scrollToSection} 
-              isSticky={isScrolled} 
-            />
-          )}
-
-          {isSignedIn && (
-            <TabBar activeTab={activeTab} onTabChange={setActiveTab} isSticky={isScrolled} />
-          )}
+          {/* Tabs - scroll to sections for both signed in and signed out */}
+          <TabBar 
+            activeTab={isSignedIn ? activeTab : selectedSection} 
+            onTabChange={scrollToSection} 
+            isSticky={isScrolled} 
+          />
 
           <div className="px-4 mt-6">
-            {(!isSignedIn || activeTab === 'coupons') && (
-              <div id="coupons">
-                <SectionHeader title="Sitewide coupons:" />
-                <CouponCard
-                  code="LONGSTAY"
-                  title="LONGSTAY"
-                  description="This gift when you book for 3+ days direct-out 35% and 20% off when you book for 30 days or more."
-                  value="₹1500"
-                  color="orange"
-                />
-                <CouponCard
-                  code="EARLYBIRD"
-                  title="EARLYBIRD"
-                  description="15% off when you book for 5 days in advance and 20% off when you book 30 days or more."
-                  value="₹3000"
-                  color="orange"
-                />
-                <CouponCard
-                  code="RUSHDEAL"
-                  title="RUSHDEAL"
-                  description="Get 25% off when you book for 2 hours and 20% off when you book for 30 days or more."
-                  value="FLAT 10%"
-                  color="orange"
-                />
-              </div>
-            )}
+            {/* Coupons Section - Always visible */}
+            <div id="coupons">
+              <SectionHeader title="Sitewide coupons:" />
+              <CouponCard
+                code="LONGSTAY"
+                title="LONGSTAY"
+                description="This gift when you book for 3+ days direct-out 35% and 20% off when you book for 30 days or more."
+                value="₹1500"
+                color="orange"
+              />
+              <CouponCard
+                code="EARLYBIRD"
+                title="EARLYBIRD"
+                description="15% off when you book for 5 days in advance and 20% off when you book 30 days or more."
+                value="₹3000"
+                color="orange"
+              />
+              <CouponCard
+                code="RUSHDEAL"
+                title="RUSHDEAL"
+                description="Get 25% off when you book for 2 hours and 20% off when you book for 30 days or more."
+                value="FLAT 10%"
+                color="orange"
+              />
+            </div>
 
-            {isSignedIn && activeTab === 'giftcards' && (
-              <>
-                <SectionHeader title="Bonus gift cards:" />
-                <p className="text-xs text-[#7D817D] mb-4 font-light">Collect multiple of these</p>
-                <div className="space-y-4">
-                  <GiftCardRow
-                    brand="MYNTRA"
-                    value="₹1500"
-                    description="Get this gift voucher on booking worth ₹1500"
-                    color="pink"
+            {/* Gift Cards Section - Always visible */}
+            <div id="giftcards">
+              <SectionHeader title="Bonus gift cards:" />
+              {isSignedIn ? (
+                <>
+                  <p className="text-xs text-[#7D817D] mb-4 font-light">Collect multiple of these</p>
+                  <div className="space-y-4">
+                    <GiftCardRow
+                      brand="MYNTRA"
+                      value="₹1500"
+                      description="Get this gift voucher on booking above ₹12000"
+                      color="pink"
+                    />
+                    <GiftCardRow
+                      brand="HARNNER"
+                      value="₹1000"
+                      description="Get this gift voucher on booking above ₹11500"
+                      color="black"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <BonusGiftCardsPreview />
+                  <button 
+                    onClick={() => setIsSignedIn(true)}
+                    className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
+                  >
+                    Claim gift cards →
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Payment Offers Section - Always visible */}
+            <div id="payment">
+              <SectionHeader title="Payment offers:" />
+              {isSignedIn ? (
+                <>
+                  <p className="text-xs text-[#7D817D] mb-4 font-light">Save more on your bookings:</p>
+                  <PaymentOfferCard
+                    bank="HDFC BANK"
+                    offer="Get 10% off on booking above ₹11500"
+                    value="UPTO 10% OFF"
                   />
-                  <GiftCardRow
-                    brand="HARNNER"
-                    value="₹1000"
-                    description="Get this gift voucher on booking worth ₹1500"
-                    color="black"
-                  />
-                </div>
-              </>
-            )}
-
-            {!isSignedIn && (
-              <div id="giftcards">
-                <SectionHeader title="Bonus gift cards:" />
-                <div className="overflow-hidden transition-all duration-500 ease-in-out">
-                  {!giftCardsExpanded ? (
-                    <>
-                      <BonusGiftCardsPreview />
-                      <button 
-                        onClick={() => setGiftCardsExpanded(true)}
-                        className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
-                      >
-                        Claim gift cards →
-                      </button>
-                    </>
-                  ) : (
-                    <div className="space-y-4 mt-3">
-                      <GiftCardRow
-                        brand="MYNTRA"
-                        value="₹1500"
-                        description="Get this gift voucher on booking worth ₹1500"
-                        color="pink"
-                      />
-                      <GiftCardRow
-                        brand="HARNNER"
-                        value="₹1000"
-                        description="Get this gift voucher on booking worth ₹1500"
-                        color="black"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {isSignedIn && activeTab === 'payment' && (
-              <>
-                <SectionHeader title="Payment offers:" />
-                <p className="text-xs text-[#7D817D] mb-4 font-light">Save more on your bookings:</p>
-                <PaymentOfferCard
-                  bank="HDFC BANK"
-                  offer="Get 10% off on booking above ₹1500"
-                  value="UPTO 10% OFF"
-                />
-              </>
-            )}
-
-            {!isSignedIn && (
-              <div id="payment">
-                <SectionHeader title="Payment offers:" />
-                <div className="overflow-hidden transition-all duration-500 ease-in-out">
-                  {!paymentOffersExpanded ? (
-                    <>
-                      <PaymentOffersPreview />
-                      <button 
-                        onClick={() => setPaymentOffersExpanded(true)}
-                        className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
-                      >
-                        Unlock offers →
-                      </button>
-                    </>
-                  ) : (
-                    <div className="mt-3">
-                      <PaymentOfferCard
-                        bank="HDFC BANK"
-                        offer="Get 10% off on booking above ₹1500"
-                        value="UPTO 10% OFF"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
+                </>
+              ) : (
+                <>
+                  <PaymentOffersPreview />
+                  <button 
+                    onClick={() => setIsSignedIn(true)}
+                    className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
+                  >
+                    Unlock offers →
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
