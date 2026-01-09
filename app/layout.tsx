@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Lexend_Deca, Libre_Caslon_Text, Playfair_Display } from 'next/font/google';
+import { Toaster } from '@/components/ui/toaster';
 
 const lexendDeca = Lexend_Deca({
   subsets: ['latin'],
@@ -47,7 +48,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${lexendDeca.variable} ${libreCaslon.variable} ${playfair.variable} font-sans`}>{children}</body>
+      <body className={`${lexendDeca.variable} ${libreCaslon.variable} ${playfair.variable} font-sans`}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

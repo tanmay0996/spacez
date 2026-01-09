@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Copy, Menu, Search, Tag, Calendar, Heart, User } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function OffersPage() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [activeTab, setActiveTab] = useState<'coupons' | 'giftcards' | 'payment'>('coupons');
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedSection, setSelectedSection] = useState<'coupons' | 'giftcards' | 'payment'>('coupons');
+  const { toast } = useToast();
 
   const scrollToSection = (section: 'coupons' | 'giftcards' | 'payment') => {
     if (isSignedIn) {
@@ -68,7 +70,15 @@ export default function OffersPage() {
   return (
     <div className="min-h-screen bg-white flex justify-center">
       <div className="w-full max-w-[393px] relative">
-        <Header isScrolled={isScrolled} />
+        <Header 
+          isScrolled={isScrolled} 
+          onMenuClick={() => {
+            toast({
+              title: "Menu",
+              description: "Menu options will be available here.",
+            });
+          }}
+        />
 
         <div className="pt-14 pb-20">
           <div className="px-4 pt-4">
@@ -101,6 +111,19 @@ export default function OffersPage() {
                 description="This gift when you book for 3+ days direct-out 35% and 20% off when you book for 30 days or more."
                 value="₹1500"
                 color="orange"
+                onCopy={() => {
+                  navigator.clipboard.writeText('LONGSTAY');
+                  toast({
+                    title: "Copied!",
+                    description: "Coupon code LONGSTAY has been copied to clipboard.",
+                  });
+                }}
+                onReadMore={() => {
+                  toast({
+                    title: "Coupon Details",
+                    description: "This coupon offers 35% off for 3+ days bookings and 20% off for 30+ days bookings.",
+                  });
+                }}
               />
               <CouponCard
                 code="EARLYBIRD"
@@ -108,6 +131,19 @@ export default function OffersPage() {
                 description="15% off when you book for 5 days in advance and 20% off when you book 30 days or more."
                 value="₹3000"
                 color="orange"
+                onCopy={() => {
+                  navigator.clipboard.writeText('EARLYBIRD');
+                  toast({
+                    title: "Copied!",
+                    description: "Coupon code EARLYBIRD has been copied to clipboard.",
+                  });
+                }}
+                onReadMore={() => {
+                  toast({
+                    title: "Coupon Details",
+                    description: "This coupon offers 15% off for 5+ days advance bookings and 20% off for 30+ days bookings.",
+                  });
+                }}
               />
               <CouponCard
                 code="RUSHDEAL"
@@ -115,6 +151,19 @@ export default function OffersPage() {
                 description="Get 25% off when you book for 2 hours and 20% off when you book for 30 days or more."
                 value="FLAT 10%"
                 color="orange"
+                onCopy={() => {
+                  navigator.clipboard.writeText('RUSHDEAL');
+                  toast({
+                    title: "Copied!",
+                    description: "Coupon code RUSHDEAL has been copied to clipboard.",
+                  });
+                }}
+                onReadMore={() => {
+                  toast({
+                    title: "Coupon Details",
+                    description: "This coupon offers 25% off for 2-hour bookings and 20% off for 30+ days bookings.",
+                  });
+                }}
               />
             </div>
 
@@ -130,12 +179,36 @@ export default function OffersPage() {
                       value="₹1500"
                       description="Get this gift voucher on booking above ₹12000"
                       color="pink"
+                      onCollect={() => {
+                        toast({
+                          title: "Collected!",
+                          description: "Myntra gift card has been added to your collection.",
+                        });
+                      }}
+                      onReadMore={() => {
+                        toast({
+                          title: "Gift Card Details",
+                          description: "Get a ₹1500 Myntra gift voucher when you book above ₹12000.",
+                        });
+                      }}
                     />
                     <GiftCardRow
                       brand="HARNNER"
                       value="₹1000"
                       description="Get this gift voucher on booking above ₹11500"
                       color="black"
+                      onCollect={() => {
+                        toast({
+                          title: "Collected!",
+                          description: "Hammer gift card has been added to your collection.",
+                        });
+                      }}
+                      onReadMore={() => {
+                        toast({
+                          title: "Gift Card Details",
+                          description: "Get a ₹1000 Hammer gift voucher when you book above ₹11500.",
+                        });
+                      }}
                     />
                   </div>
                 </>
@@ -143,6 +216,12 @@ export default function OffersPage() {
                 <>
                   <BonusGiftCardsPreview />
                   <button 
+                    onClick={() => {
+                      toast({
+                        title: "Sign in Required",
+                        description: "Please sign in to claim gift cards.",
+                      });
+                    }}
                     className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
                   >
                     Claim gift cards »
@@ -161,12 +240,24 @@ export default function OffersPage() {
                     bank="HDFC BANK"
                     offer="Get 10% off on booking above ₹11500"
                     value="UPTO 10% OFF"
+                    onReadMore={() => {
+                      toast({
+                        title: "Payment Offer Details",
+                        description: "Get 10% off on bookings above ₹11500 using HDFC Bank payment methods.",
+                      });
+                    }}
                   />
                 </>
               ) : (
                 <>
                   <PaymentOffersPreview />
                   <button 
+                    onClick={() => {
+                      toast({
+                        title: "Sign in Required",
+                        description: "Please sign in to unlock payment offers.",
+                      });
+                    }}
                     className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
                   >
                     Unlock offers »
@@ -177,13 +268,29 @@ export default function OffersPage() {
           </div>
         </div>
 
-        <BottomNav activeTab="offers" />
+        <BottomNav 
+          activeTab="offers" 
+          onNavClick={(itemId: string) => {
+            const messages: Record<string, { title: string; description: string }> = {
+              explore: { title: "Explore", description: "Browse available spaces and accommodations." },
+              offers: { title: "Offers", description: "View all available offers and discounts." },
+              bookings: { title: "Bookings", description: "View your booking history and manage reservations." },
+              wishlist: { title: "Wishlist", description: "View your saved spaces and favorites." },
+              profile: { title: "Profile", description: "Manage your account settings and preferences." },
+            };
+            const message = messages[itemId] || { title: "Navigation", description: "Navigating..." };
+            toast({
+              title: message.title,
+              description: message.description,
+            });
+          }}
+        />
       </div>
     </div>
   );
 }
 
-function Header({ isScrolled }: { isScrolled: boolean }) {
+function Header({ isScrolled, onMenuClick }: { isScrolled: boolean; onMenuClick?: () => void }) {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow ${isScrolled ? 'shadow-sm' : ''}`}>
       <div className="max-w-[393px] mx-auto flex items-center justify-between h-14 px-4">
@@ -206,7 +313,10 @@ function Header({ isScrolled }: { isScrolled: boolean }) {
           </svg>
           <span className="font-display text-lg text-[#874B2C] font-medium">SPACEZ</span>
         </div>
-        <button className="p-2">
+        <button 
+          onClick={onMenuClick}
+          className="p-2"
+        >
           <Menu className="w-5 h-5 text-[#874B2C]" />
         </button>
       </div>
@@ -215,12 +325,20 @@ function Header({ isScrolled }: { isScrolled: boolean }) {
 }
 
 function SignInBanner({ onSignIn }: { onSignIn: () => void }) {
+  const { toast } = useToast();
+  
   return (
     <div className="px-4 mt-4">
       <div className="bg-[#C16B3E] text-white rounded-lg p-4 text-center">
         <p className="text-sm font-light mb-2">Sign in for 10% back on SPACEZ...</p>
         <button
-          onClick={onSignIn}
+          onClick={() => {
+            onSignIn();
+            toast({
+              title: "Success!",
+              description: "You have successfully signed in.",
+            });
+          }}
           className="bg-white text-[#C16B3E] px-6 py-2 rounded-md text-sm font-semibold"
         >
           Sign in
@@ -282,12 +400,14 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-function CouponCard({ code, title, description, value, color }: {
+function CouponCard({ code, title, description, value, color, onCopy, onReadMore }: {
   code: string;
   title: string;
   description: string;
   value: string;
   color: 'orange' | 'blue';
+  onCopy?: () => void;
+  onReadMore?: () => void;
 }) {
   const bgColor = color === 'orange' ? '#C16B3E' : '#3168CF';
 
@@ -338,7 +458,10 @@ function CouponCard({ code, title, description, value, color }: {
       <div className="flex-1 bg-[#FDF9F7] p-5 relative">
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-lg font-semibold text-[#4B4E4B]">{title}</h3>
-          <button className="flex items-center gap-1 text-[#C16B3E] text-sm font-medium">
+          <button 
+            onClick={onCopy}
+            className="flex items-center gap-1 text-[#C16B3E] text-sm font-medium"
+          >
             <Copy className="w-4 h-4" />
             Copy
           </button>
@@ -346,7 +469,10 @@ function CouponCard({ code, title, description, value, color }: {
         <p className="text-sm font-light text-[#7D817D] leading-relaxed mb-3">
           {description}
         </p>
-        <button className="text-[#C16B3E] text-sm font-medium">
+        <button 
+          onClick={onReadMore}
+          className="text-[#C16B3E] text-sm font-medium"
+        >
           Read more
         </button>
       </div>
@@ -354,11 +480,13 @@ function CouponCard({ code, title, description, value, color }: {
   );
 }
 
-function GiftCardRow({ brand, value, description, color }: {
+function GiftCardRow({ brand, value, description, color, onCollect, onReadMore }: {
   brand: string;
   value: string;
   description: string;
   color: 'pink' | 'black';
+  onCollect?: () => void;
+  onReadMore?: () => void;
 }) {
   const bgColor = color === 'pink' ? '#D41C9B' : '#000000';
 
@@ -437,7 +565,10 @@ function GiftCardRow({ brand, value, description, color }: {
               </div>
             )}
           </div>
-          <button className="text-[#C16B3E] text-sm font-medium flex-shrink-0">
+          <button 
+            onClick={onCollect}
+            className="text-[#C16B3E] text-sm font-medium flex-shrink-0"
+          >
             Collect
           </button>
         </div>
@@ -447,7 +578,10 @@ function GiftCardRow({ brand, value, description, color }: {
             {description}
           </p>
           <div className="h-px bg-[#E5E6E5] mb-3"></div>
-          <button className="text-[#7D817D] text-sm font-medium underline">
+          <button 
+            onClick={onReadMore}
+            className="text-[#7D817D] text-sm font-medium underline"
+          >
             Read more
           </button>
         </div>
@@ -524,10 +658,11 @@ function PaymentOffersPreview() {
   );
 }
 
-function PaymentOfferCard({ bank, offer, value }: {
+function PaymentOfferCard({ bank, offer, value, onReadMore }: {
   bank: string;
   offer: string;
   value: string;
+  onReadMore?: () => void;
 }) {
   // Extract percentage from value (e.g., "UPTO 10% OFF" -> "10% OFF")
   const displayValue = value.includes('%') ? value.split('%')[0] + '% OFF' : value;
@@ -624,7 +759,10 @@ function PaymentOfferCard({ bank, offer, value }: {
         </div>
         <div className="mt-3">
           <div className="h-px bg-[#E5E6E5] mb-3"></div>
-          <button className="text-[#7D817D] text-sm font-medium">
+          <button 
+            onClick={onReadMore}
+            className="text-[#7D817D] text-sm font-medium"
+          >
             Read more
           </button>
         </div>
@@ -633,7 +771,7 @@ function PaymentOfferCard({ bank, offer, value }: {
   );
 }
 
-function BottomNav({ activeTab }: { activeTab: string }) {
+function BottomNav({ activeTab, onNavClick }: { activeTab: string; onNavClick?: (itemId: string) => void }) {
   const navItems = [
     { id: 'explore', label: 'Explore', icon: Search },
     { id: 'offers', label: 'Offers', icon: Tag },
@@ -651,6 +789,7 @@ function BottomNav({ activeTab }: { activeTab: string }) {
           return (
             <button
               key={item.id}
+              onClick={() => onNavClick?.(item.id)}
               className={`flex flex-col items-center justify-center gap-1 flex-1 ${
                 isActive ? 'text-[#874B2C]' : 'text-[#7D817D]'
               }`}
