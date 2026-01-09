@@ -10,15 +10,48 @@ export default function OffersPage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [giftCardsExpanded, setGiftCardsExpanded] = useState(false);
   const [paymentOffersExpanded, setPaymentOffersExpanded] = useState(false);
+  const [selectedSection, setSelectedSection] = useState<'coupons' | 'giftcards' | 'payment'>('coupons');
+
+  const scrollToSection = (section: 'coupons' | 'giftcards' | 'payment') => {
+    setSelectedSection(section);
+    const element = document.getElementById(section);
+    if (element) {
+      const headerOffset = 56; // Height of header
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      
+      // Update active section based on scroll position (for non-signed-in users)
+      if (!isSignedIn) {
+        const coupons = document.getElementById('coupons');
+        const giftcards = document.getElementById('giftcards');
+        const payment = document.getElementById('payment');
+        
+        const scrollPosition = window.scrollY + 100; // Offset for header
+        
+        if (payment && scrollPosition >= payment.offsetTop) {
+          setSelectedSection('payment');
+        } else if (giftcards && scrollPosition >= giftcards.offsetTop) {
+          setSelectedSection('giftcards');
+        } else if (coupons && scrollPosition >= coupons.offsetTop) {
+          setSelectedSection('coupons');
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isSignedIn]);
 
   return (
     <div className="min-h-screen bg-white flex justify-center">
@@ -39,13 +72,22 @@ export default function OffersPage() {
             <SignInBanner onSignIn={() => setIsSignedIn(true)} />
           )}
 
+          {/* Tabs for non-signed-in users */}
+          {!isSignedIn && (
+            <TabBar 
+              activeTab={selectedSection} 
+              onTabChange={scrollToSection} 
+              isSticky={isScrolled} 
+            />
+          )}
+
           {isSignedIn && (
             <TabBar activeTab={activeTab} onTabChange={setActiveTab} isSticky={isScrolled} />
           )}
 
           <div className="px-4 mt-6">
             {(!isSignedIn || activeTab === 'coupons') && (
-              <>
+              <div id="coupons">
                 <SectionHeader title="Sitewide coupons:" />
                 <CouponCard
                   code="LONGSTAY"
@@ -68,7 +110,7 @@ export default function OffersPage() {
                   value="FLAT 10%"
                   color="orange"
                 />
-              </>
+              </div>
             )}
 
             {isSignedIn && activeTab === 'giftcards' && (
@@ -93,7 +135,7 @@ export default function OffersPage() {
             )}
 
             {!isSignedIn && (
-              <>
+              <div id="giftcards">
                 <SectionHeader title="Bonus gift cards:" />
                 <div className="overflow-hidden transition-all duration-500 ease-in-out">
                   {!giftCardsExpanded ? (
@@ -123,7 +165,7 @@ export default function OffersPage() {
                     </div>
                   )}
                 </div>
-              </>
+              </div>
             )}
 
             {isSignedIn && activeTab === 'payment' && (
@@ -139,7 +181,7 @@ export default function OffersPage() {
             )}
 
             {!isSignedIn && (
-              <>
+              <div id="payment">
                 <SectionHeader title="Payment offers:" />
                 <div className="overflow-hidden transition-all duration-500 ease-in-out">
                   {!paymentOffersExpanded ? (
@@ -162,7 +204,7 @@ export default function OffersPage() {
                     </div>
                   )}
                 </div>
-              </>
+              </div>
             )}
           </div>
         </div>
