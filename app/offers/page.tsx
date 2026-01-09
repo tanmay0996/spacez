@@ -424,36 +424,15 @@ function GiftCardRow({ brand, value, description, color }: {
               </div>
             )}
             
-            {/* Hammer Logo - Stylized HAMMER text */}
+            {/* Hammer Logo - Using image */}
             {brand === 'HARNNER' && (
               <div className="flex items-center gap-2 flex-shrink-0">
-                <div className="w-auto h-9 bg-black rounded flex items-center justify-center px-3">
-                  <svg width="52" height="14" viewBox="0 0 52 14" className="flex-shrink-0">
-                    {/* H */}
-                    <rect x="0" y="0" width="1.5" height="14" fill="white" />
-                    <rect x="0" y="6" width="6" height="1.5" fill="white" />
-                    <rect x="4.5" y="0" width="1.5" height="14" fill="white" />
-                    {/* A - inverted V shape (no crossbar) */}
-                    <path d="M 7 14 L 9.5 0 L 12 14" stroke="white" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-                    {/* M */}
-                    <rect x="14" y="0" width="1.5" height="14" fill="white" />
-                    <path d="M 15.5 0 L 17.5 7 L 19.5 0" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                    <rect x="21" y="0" width="1.5" height="14" fill="white" />
-                    {/* M */}
-                    <rect x="24" y="0" width="1.5" height="14" fill="white" />
-                    <path d="M 25.5 0 L 27.5 7 L 29.5 0" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                    <rect x="31" y="0" width="1.5" height="14" fill="white" />
-                    {/* E - three horizontal lines (no vertical bar) */}
-                    <rect x="34" y="0" width="4" height="1.5" fill="white" />
-                    <rect x="34" y="6" width="4" height="1.5" fill="white" />
-                    <rect x="34" y="12.5" width="4" height="1.5" fill="white" />
-                    {/* R */}
-                    <rect x="40" y="0" width="1.5" height="14" fill="white" />
-                    <rect x="40" y="0" width="5" height="1.5" fill="white" />
-                    <rect x="40" y="6" width="5" height="1.5" fill="white" />
-                    <path d="M 45 0 L 46.5 7 L 45 14" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                  </svg>
-                </div>
+                <img 
+                  src="/59ecab7a9ab200374fe553314281d87ce012c061.png" 
+                  alt="Hammer Logo" 
+                  className="h-9 w-auto flex-shrink-0"
+                  style={{ objectFit: 'contain' }}
+                />
                 <span className="text-base font-semibold text-[#4B4E4B]">{brand}</span>
               </div>
             )}
@@ -615,7 +594,7 @@ function PaymentOfferCard({ bank, offer, value }: {
         />
       </div>
 
-      <div className="flex-1 bg-white p-5 relative flex flex-col justify-between rounded-r-lg">
+      <div className="flex-1 bg-[#FDF9F7] p-5 relative flex flex-col justify-between rounded-r-lg">
         <div className="flex items-start gap-3">
           {/* HDFC Bank Logo - Blue square with red L-shapes */}
           <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-[#E5E6E5] flex-shrink-0 relative">
