@@ -146,7 +146,7 @@ export default function OffersPage() {
                     onClick={() => setIsSignedIn(true)}
                     className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
                   >
-                    Claim gift cards →
+                    Claim gift cards »
                   </button>
                 </>
               )}
@@ -171,7 +171,7 @@ export default function OffersPage() {
                     onClick={() => setIsSignedIn(true)}
                     className="w-full bg-[#C16B3E] text-white py-3.5 rounded-lg text-sm font-medium mt-3"
                   >
-                    Unlock offers →
+                    Unlock offers »
                   </button>
                 </>
               )}
@@ -416,12 +416,10 @@ function GiftCardRow({ brand, value, description, color }: {
             {/* Myntra Logo - Using image */}
             {brand === 'MYNTRA' && (
               <div className="flex items-center gap-2.5 flex-shrink-0">
-                <Image 
-                  src="/myntra-logo.png" 
+                <img 
+                  src="/0eca9644dbe42378546cdfb94c27980c9b80724a%20(1).png" 
                   alt="Myntra Logo" 
-                  width={28}
-                  height={20}
-                  className="flex-shrink-0"
+                  className="h-5 w-auto flex-shrink-0"
                   style={{ objectFit: 'contain' }}
                 />
                 <span className="text-base font-bold text-[#4B4E4B] uppercase tracking-tight" style={{ fontFamily: 'sans-serif' }}>MYNTRA</span>
@@ -484,32 +482,67 @@ function GiftCardRow({ brand, value, description, color }: {
 function BonusGiftCardsPreview() {
   return (
     <div className="bg-[#FDF9F7] rounded-lg p-4 mb-3">
-      <p className="text-xs text-[#7D817D] mb-3 font-light">Assured vouchers up to</p>
-      <div className="flex gap-3 mb-3">
-        <div className="flex-1 bg-[#C16B3E] text-white rounded-lg p-4 text-center relative overflow-hidden">
-          <div className="text-2xl font-bold mb-1">₹1000</div>
-          <div className="text-xs opacity-90">Voucher</div>
-          <div className="absolute -right-2 -bottom-2 text-6xl opacity-10">M</div>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex-1">
+          <p className="text-xs text-[#7D817D] mb-2 font-light">Assured vouchers up to</p>
+          <div className="flex items-center gap-1 mb-2">
+            <span className="text-3xl font-bold text-[#C16B3E]">₹1000</span>
+            {/* Sparkle icons */}
+            <svg width="16" height="16" viewBox="0 0 16 16" className="text-yellow-400">
+              <path d="M8 0 L9.5 6 L16 7.5 L9.5 9 L8 16 L6.5 9 L0 7.5 L6.5 6 Z" fill="currentColor" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" className="text-yellow-400">
+              <path d="M8 0 L9.5 6 L16 7.5 L9.5 9 L8 16 L6.5 9 L0 7.5 L6.5 6 Z" fill="currentColor" />
+            </svg>
+          </div>
+          <p className="text-xs text-[#7D817D] font-light">of trending brands</p>
         </div>
-        <div className="flex-1 bg-[#3168CF] text-white rounded-lg p-4 text-center relative overflow-hidden">
-          <div className="text-2xl font-bold mb-1">₹500</div>
-          <div className="text-xs opacity-90">Voucher</div>
-          <div className="absolute -right-2 -bottom-2 text-6xl opacity-10">H</div>
+        
+        {/* Overlapping gift cards on the right */}
+        <div className="relative flex-shrink-0" style={{ width: '120px', height: '100px' }}>
+          {/* Top orange card */}
+          <div className="absolute top-0 right-0 bg-[#C16B3E] text-white rounded-lg p-3 text-center shadow-md" style={{ width: '90px', height: '70px', zIndex: 2 }}>
+            <div className="text-xl font-bold mb-0.5">₹400</div>
+            <div className="text-[10px] opacity-90">Gift card</div>
+          </div>
+          {/* Bottom blue card with sparkles */}
+          <div className="absolute bottom-0 right-4 bg-[#3168CF] text-white rounded-lg p-3 text-center shadow-md overflow-hidden" style={{ width: '90px', height: '70px', zIndex: 1 }}>
+            <div className="text-xl font-bold mb-0.5">₹500</div>
+            <div className="text-[10px] opacity-90">Gift card</div>
+            {/* Sparkle icons scattered */}
+            <svg width="8" height="8" viewBox="0 0 8 8" className="absolute top-2 right-3 text-white opacity-60">
+              <path d="M4 0 L4.5 3 L8 3.5 L4.5 4 L4 8 L3.5 4 L0 3.5 L3.5 3 Z" fill="currentColor" />
+            </svg>
+            <svg width="6" height="6" viewBox="0 0 6 6" className="absolute bottom-3 left-2 text-white opacity-60">
+              <path d="M3 0 L3.3 2.2 L6 2.5 L3.3 2.8 L3 6 L2.7 2.8 L0 2.5 L2.7 2.2 Z" fill="currentColor" />
+            </svg>
+            <svg width="7" height="7" viewBox="0 0 7 7" className="absolute top-4 left-4 text-white opacity-60">
+              <path d="M3.5 0 L3.8 2.5 L7 3 L3.8 3.5 L3.5 7 L3.2 3.5 L0 3 L3.2 2.5 Z" fill="currentColor" />
+            </svg>
+          </div>
         </div>
       </div>
-      <p className="text-xs text-[#7D817D] font-light">of trending brands</p>
     </div>
   );
 }
 
 function PaymentOffersPreview() {
   return (
-    <div className="bg-[#FDF9F7] rounded-lg p-6 text-center mb-3">
-      <div className="w-20 h-20 bg-white rounded-full mx-auto mb-3 flex items-center justify-center border-2 border-[#E5E6E5]">
-        <div className="text-3xl font-bold text-[#3168CF]">15%</div>
+    <div className="bg-[#FDF9F7] rounded-lg p-5 mb-3">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1">
+          <p className="text-xs text-[#7D817D] mb-1 font-light">Save more on your bookings</p>
+          <p className="text-2xl font-bold text-[#C16B3E] mb-1">upto 15% Off</p>
+          <p className="text-xs text-[#C16B3E] font-light">on select payment methods</p>
+        </div>
+        <div className="flex-shrink-0">
+          <img 
+            src="/a94a9cfeb5758ec62c1190ed22abefbd0180937b.png" 
+            alt="Payment Methods" 
+            className="w-[120px] h-[100px] object-contain"
+          />
+        </div>
       </div>
-      <p className="text-base font-semibold text-[#4B4E4B] mb-1">15% Off</p>
-      <p className="text-xs text-[#7D817D] font-light">on select payment methods</p>
     </div>
   );
 }
